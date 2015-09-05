@@ -158,7 +158,8 @@ class ProviderManager(object):
                                      'opensubtitles = subliminal.providers.opensubtitles:OpenSubtitlesProvider',
                                      'podnapisi = subliminal.providers.podnapisi:PodnapisiProvider',
                                      'thesubdb = subliminal.providers.thesubdb:TheSubDBProvider',
-                                     'tvsubtitles = subliminal.providers.tvsubtitles:TVsubtitlesProvider']
+                                     'tvsubtitles = subliminal.providers.tvsubtitles:TVsubtitlesProvider',
+                                     'subhd = subliminal.providers.subhd:SubHDProvider']
 
         #: Loaded providers
         self.providers = {}

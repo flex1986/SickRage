@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals, print_function
+import sys, os
+sys.path.insert(1, os.path.abspath('../'))
+
 import argparse
 import datetime
 import logging
@@ -195,3 +198,6 @@ def subliminal():
             print('%d subtitle downloaded' % subtitles_count)
         else:
             print('%d subtitles downloaded' % subtitles_count)
+
+if __name__ == '__main__':
+    subliminal()

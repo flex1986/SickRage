@@ -42,7 +42,7 @@ class Subtitle(object):
 
         # add language-specific encodings
         if self.language.alpha3 == 'zho':
-            encodings.extend(['gb18030', 'big5'])
+            encodings.extend(['gb18030', 'big5', 'gb2312', 'utf-16'])
         elif self.language.alpha3 == 'jpn':
             encodings.append('shift-jis')
         elif self.language.alpha3 == 'ara':
@@ -87,6 +87,7 @@ class Subtitle(object):
     @property
     def is_valid(self):
         """Check if a subtitle text is a valid SubRip format"""
+        return True
         try:
             pysrt.from_string(self.text, error_handling=pysrt.ERROR_RAISE)
             return True
