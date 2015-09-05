@@ -131,6 +131,11 @@ class Subtitle(object):
         # compute matches
         initial_matches = self.compute_matches(video)
         matches = initial_matches.copy()
+
+        if 'yyets' in matches:
+            score += 10
+            matches.remove('yyets')
+
         # hash is the perfect match
         if 'hash' in matches:
             score = video.scores['hash']

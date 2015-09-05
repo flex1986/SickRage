@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 class SubHDSubtitle(Subtitle):
     provider_name = 'subhd'
 
-    def __init__(self, language, series, season, episode, movie, year, release, url):  # @ReservedAssignment
+    def __init__(self, language, series, season, episode, movie, year, subber, release, url):  # @ReservedAssignment
         super(SubHDSubtitle, self).__init__(language)
         self.series = series
         self.season = season
@@ -34,6 +34,7 @@ class SubHDSubtitle(Subtitle):
         self.year = year
         self.release = release
         self.url = url
+        self.subber = subber
         self.hash = 'subhd'
 
     def compute_matches(self, video):
@@ -64,6 +65,9 @@ class SubHDSubtitle(Subtitle):
             logger.info('%r is not a valid movie_kind for %r', self.movie_kind, video)
             return matches
 
+        if self.subber and "yyets" in self.subber.lower():
+            matches.add("yyets")
+            
         return matches
 
 
@@ -129,11 +133,12 @@ class SubHDProvider(Provider):
         for element in elements:
             s_url = str(element.xpath('.//div[@class="d_title"]/a')[0].attrib['href'])
             s_release = element.xpath('.//span[@data-toggle="tooltip"]')[0].attrib['title']
+            s_subber = element.xpath('.//div[@class="d_zu"]/a')[0].text if len(element.xpath('.//div[@class="d_zu"]/a')) > 0 else ""
             
             if isinstance(video, Episode):
-                subtitles.append(SubHDSubtitle(babelfish.Language.fromalpha2('zh'), video.series , video.season, video.episode, None, None, s_release, s_url))
+                subtitles.append(SubHDSubtitle(babelfish.Language.fromalpha2('zh'), video.series , video.season, video.episode, None, None, s_subber, s_release, s_url))
             elif isinstance(video, Movie):
-                subtitles.append(SubHDSubtitle(babelfish.Language.fromalpha2('zh'), None , None, None, video.title, video.year, s_release, s_url))
+                subtitles.append(SubHDSubtitle(babelfish.Language.fromalpha2('zh'), None , None, None, video.title, video.year, s_subber, s_release, s_url))
 
 
         return reversed(subtitles)
